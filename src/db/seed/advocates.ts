@@ -173,6 +173,15 @@ const advocateData = [
     yearsOfExperience: 3,
     phoneNumber: 5559872345,
   },
+  {
+    firstName: "Adam",
+    lastName: "Boyd",
+    city: "Chicago",
+    degree: "3rd",
+    specialties: ["node.js", "javascript", "typescript", "php", "react.js", "next.js", "vue.js", "mysql", "mongodb", "redis", "elasticsearch", "css", "design"],
+    yearsOfExperience: 12,
+    phoneNumber: 6023126073,
+  },
 ];
 
 export { advocateData };
