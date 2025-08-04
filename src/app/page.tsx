@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { advocateData } from "../db/seed/advocates";
 
 interface Advocate {
   firstName: string;
@@ -29,13 +30,29 @@ export default function Home() {
   };
 
   useEffect(() => {
-    console.log("fetching advocates...");
+    // Option 1: Use PostgreSQL database (requires DATABASE_URL environment variable)
+    // Uncomment this section for full database functionality
+    /*
+    console.log("fetching advocates from database...");
     fetch("/api/advocates").then((response) => {
       response.json().then((jsonResponse) => {
         setAdvocates(jsonResponse.data);
         setFilteredAdvocates(jsonResponse.data);
       });
     });
+    */
+
+    // Option 2: Use seed data for demo purposes (works without database setup)
+    // This is currently active for Vercel deployment demonstration
+    console.log("loading advocates from seed data...");
+    const formattedAdvocates = advocateData.map(advocate => ({
+      ...advocate,
+      yearsOfExperience: advocate.yearsOfExperience.toString(),
+      phoneNumber: advocate.phoneNumber.toString()
+    }));
+    
+    setAdvocates(formattedAdvocates);
+    setFilteredAdvocates(formattedAdvocates);
   }, []);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
