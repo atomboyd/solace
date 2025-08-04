@@ -30,29 +30,31 @@ export default function Home() {
   };
 
   useEffect(() => {
-    // Option 1: Use PostgreSQL database (requires DATABASE_URL environment variable)
-    // Uncomment this section for full database functionality
-    /*
-    console.log("fetching advocates from database...");
+    // Using API route which handles both database and seed data options
+    // The API route is configured to use seed data for demo/deployment purposes
+    console.log("fetching advocates from API...");
     fetch("/api/advocates").then((response) => {
       response.json().then((jsonResponse) => {
-        setAdvocates(jsonResponse.data);
-        setFilteredAdvocates(jsonResponse.data);
+        // Format the data to ensure consistent types
+        const formattedAdvocates = jsonResponse.data.map((advocate: any) => ({
+          ...advocate,
+          yearsOfExperience: advocate.yearsOfExperience.toString(),
+          phoneNumber: advocate.phoneNumber.toString()
+        }));
+        setAdvocates(formattedAdvocates);
+        setFilteredAdvocates(formattedAdvocates);
       });
+    }).catch((error) => {
+      console.error("Error fetching advocates:", error);
+      // Fallback to direct seed data if API fails
+      const formattedAdvocates = advocateData.map(advocate => ({
+        ...advocate,
+        yearsOfExperience: advocate.yearsOfExperience.toString(),
+        phoneNumber: advocate.phoneNumber.toString()
+      }));
+      setAdvocates(formattedAdvocates);
+      setFilteredAdvocates(formattedAdvocates);
     });
-    */
-
-    // Option 2: Use seed data for demo purposes (works without database setup)
-    // This is currently active for Vercel deployment demonstration
-    console.log("loading advocates from seed data...");
-    const formattedAdvocates = advocateData.map(advocate => ({
-      ...advocate,
-      yearsOfExperience: advocate.yearsOfExperience.toString(),
-      phoneNumber: advocate.phoneNumber.toString()
-    }));
-    
-    setAdvocates(formattedAdvocates);
-    setFilteredAdvocates(formattedAdvocates);
   }, []);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
